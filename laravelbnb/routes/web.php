@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+// fallback route
+Route::get('/{any?}', function () {
     return view('welcome');
-});
+    // (?!regex) 否定先読み
+})->where('any', '^(?!api\/)[\/\w\.-]*');
