@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h1>Title</h1>
-    <p>Content</p>
+    <h1>{{ ItemTitle }}</h1>
+    <p>{{ ItemContent }}</p>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: { ItemTitle: String, ItemContent: String, price: Number }
+}
 </script>
 
 <style scoped>
