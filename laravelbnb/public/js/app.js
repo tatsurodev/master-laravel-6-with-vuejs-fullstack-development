@@ -1875,6 +1875,9 @@ __webpack_require__.r(__webpack_exports__);
     ItemTitle: String,
     ItemContent: String,
     price: Number
+  },
+  mounted: function mounted() {
+    console.log(this.ItemTitle); // this.ItemTitle = 'New title'
   }
 });
 

@@ -7,7 +7,11 @@
 
 <script>
 export default {
-  props: { ItemTitle: String, ItemContent: String, price: Number }
+  props: { ItemTitle: String, ItemContent: String, price: Number },
+  mounted() {
+    console.log(this.ItemTitle)
+    // this.ItemTitle = 'New title'
+  }
 }
 </script>
 
