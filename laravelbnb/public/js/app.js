@@ -1877,7 +1877,10 @@ __webpack_require__.r(__webpack_exports__);
     price: Number
   },
   mounted: function mounted() {
-    console.log(this.ItemTitle); // this.ItemTitle = 'New title'
+    console.log(this.ItemTitle); // propsを更新してもparent componentからpropsが渡ってくると更新されてしまうのでbad idea
+    // setTimeout(() => {
+    //   this.ItemTitle = 'New title'
+    // }, 1500)
   }
 });
 
@@ -1911,6 +1914,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1921,14 +1929,8 @@ __webpack_require__.r(__webpack_exports__);
   // reactiveに表示したいものはdataに格納、そうでないものはpropsを使うと良い
   data: function data() {
     return {
-      bookable1: {
-        title: 'Cheap Villa',
-        content: 'A very cheap villa'
-      },
-      bookable2: {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }
+      bookable1: null,
+      bookable2: null
     };
   },
   //   beforeCreate() {
@@ -1942,9 +1944,29 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.bookable1);
     console.log(this.bookable2);
     setTimeout(function () {
-      _this.bookable1.title = 'Expensive Villa';
-      _this.bookable2.title = 'Very Expensive Villa';
-    }, 5000);
+      _this.bookable1 = {
+        title: 'Cheap Villa',
+        content: 'A very cheap villa'
+      };
+      _this.bookable2 = {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      };
+      _this.bookable3 = {
+        title: 'Expensive Villa',
+        content: 'A very cheap villa 3'
+      };
+    }, 5000); // dataに定義したreactive dataを変更すると即座に反映される
+
+    setTimeout(function () {
+      console.log('First change');
+      _this.bookable1.title = 'You will see this!';
+    }, 8000); // dataに定義せずに後でdata objectに代入してもreactiveにならない、ここではbookable3を12000ms後に変更しているがreactiveに反映されない
+
+    setTimeout(function () {
+      console.log('Second change');
+      _this.bookable3.title = 'You wont see this!';
+    }, 12000);
   } //   beforeMount() {
   //     console.log('before mount')
   //   },
@@ -37483,6 +37505,14 @@ var render = function() {
         attrs: {
           "item-title": _vm.bookable2.title,
           "item-content": _vm.bookable2.content,
+          price: 1500
+        }
+      }),
+      _vm._v(" "),
+      _c("bookable-list-item", {
+        attrs: {
+          "item-title": _vm.bookable3.title,
+          "item-content": _vm.bookable3.content,
           price: 1500
         }
       })

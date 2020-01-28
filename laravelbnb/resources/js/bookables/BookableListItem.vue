@@ -10,7 +10,10 @@ export default {
   props: { ItemTitle: String, ItemContent: String, price: Number },
   mounted() {
     console.log(this.ItemTitle)
-    // this.ItemTitle = 'New title'
+    // propsを更新してもparent componentからpropsが渡ってくると更新されてしまうのでbad idea
+    // setTimeout(() => {
+    //   this.ItemTitle = 'New title'
+    // }, 1500)
   }
 }
 </script>

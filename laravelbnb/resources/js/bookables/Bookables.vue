@@ -13,6 +13,11 @@
       :item-content="bookable2.content"
       :price="1500"
     ></bookable-list-item>
+    <bookable-list-item
+      :item-title="bookable3.title"
+      :item-content="bookable3.content"
+      :price="1500"
+    ></bookable-list-item>
   </div>
 </template>
 
@@ -27,14 +32,8 @@ export default {
   // reactiveに表示したいものはdataに格納、そうでないものはpropsを使うと良い
   data() {
     return {
-      bookable1: {
-        title: 'Cheap Villa',
-        content: 'A very cheap villa'
-      },
-      bookable2: {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }
+      bookable1: null,
+      bookable2: null
     }
   },
   //   beforeCreate() {
@@ -46,9 +45,29 @@ export default {
     console.log(this.bookable1)
     console.log(this.bookable2)
     setTimeout(() => {
-      this.bookable1.title = 'Expensive Villa'
-      this.bookable2.title = 'Very Expensive Villa'
+      this.bookable1 = {
+        title: 'Cheap Villa',
+        content: 'A very cheap villa'
+      }
+      this.bookable2 = {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }
+      this.bookable3 = {
+        title: 'Expensive Villa',
+        content: 'A very cheap villa 3'
+      }
     }, 5000)
+    // dataに定義したreactive dataを変更すると即座に反映される
+    setTimeout(() => {
+      console.log('First change')
+      this.bookable1.title = 'You will see this!'
+    }, 8000)
+    // dataに定義せずに後でdata objectに代入してもreactiveにならない、ここではbookable3を12000ms後に変更しているがreactiveに反映されない
+    setTimeout(() => {
+      console.log('Second change')
+      this.bookable3.title = 'You wont see this!'
+    }, 12000)
   }
   //   beforeMount() {
   //     console.log('before mount')
