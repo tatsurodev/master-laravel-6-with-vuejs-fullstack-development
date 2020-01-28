@@ -1,20 +1,19 @@
 <template>
   <div>
-    <!-- <BookableListItem></BookableListItem> -->
-    <!-- kebab-caseで渡したpropsは、PascaleCaseで使用する -->
-    <!-- propsの型を指定するにはv-bindでquoteの中をjavascript式にして、渡したい型の文字列、数字、配列、オブジェクト等を指定する -->
-    <bookable-list-item
-      v-if="bookable1"
-      :item-title="bookable1.title"
-      :item-content="bookable1.content"
-      :price="1000"
-    ></bookable-list-item>
-    <bookable-list-item
-      v-if="bookable2"
-      :item-title="bookable2.title"
-      :item-content="bookable2.content"
-      :price="1500"
-    ></bookable-list-item>
+    <div v-if="loading">Data is loading...</div>
+    <div v-else>
+      <!-- <BookableListItem></BookableListItem> -->
+      <!-- kebab-caseで渡したpropsは、PascaleCaseで使用する -->
+      <!-- propsの型を指定するにはv-bindでquoteの中をjavascript式にして、渡したい型の文字列、数字、配列、オブジェクト等を指定する -->
+      <!-- bookablesがnullの時、v-forはスキップされる -->
+      <bookable-list-item
+        :item-title="bookable.title"
+        :item-content="bookable.content"
+        :price="1000"
+        v-for="(bookable, index) in bookables"
+        :key="index"
+      ></bookable-list-item>
+    </div>
   </div>
 </template>
 
@@ -29,8 +28,9 @@ export default {
   // reactiveに表示したいものはdataに格納、そうでないものはpropsを使うと良い
   data() {
     return {
-      bookable1: null,
-      bookable2: null
+      bookables: null,
+      // loading中であればtrueなので初期値はfalse
+      loading: false
     }
   },
   //   beforeCreate() {
@@ -38,15 +38,19 @@ export default {
   //   },
   // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
   created() {
+    this.loading = true
     setTimeout(() => {
-      this.bookable1 = {
-        title: 'Cheap Villa',
-        content: 'A very cheap villa'
-      }
-      this.bookable2 = {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }
+      this.bookables = [
+        {
+          title: 'Cheap Villa',
+          content: 'A very cheap villa'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
+        }
+      ]
+      this.loading = false
     }, 2000)
   }
 }
