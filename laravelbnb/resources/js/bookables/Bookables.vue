@@ -19,7 +19,28 @@ export default {
     // PascaleCaseで登録するとtemplateでPascaleCase or kebab-caseで使用可
     // kebab-caseで登録するとtemplateではkebab-caseのみで使用可
     BookableListItem
+  },
+  //   beforeCreate() {
+  //     console.log('before create')
+  //   },
+  // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
+  created() {
+    console.log('created')
   }
+  //   beforeMount() {
+  //     console.log('before mount')
+  //   },
+  // child componentのmountedが呼ばれてからparent componentのmountedが呼ばれる
+  //   mounted() {
+  //     console.log('mounted')
+  //   }
+  // destroyは表示されるcomponentが変化する時にcall
+  //   beforeDestroy() {
+  //     console.log('before destroy')
+  //   },
+  //   destroyed() {
+  //     console.log('destroyed')
+  //   }
 }
 </script>
 
