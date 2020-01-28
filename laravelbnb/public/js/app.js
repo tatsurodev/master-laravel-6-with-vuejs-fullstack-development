@@ -1870,17 +1870,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     ItemTitle: String,
     ItemContent: String,
     price: Number
-  },
-  mounted: function mounted() {
-    console.log(this.ItemTitle); // propsを更新してもparent componentからpropsが渡ってくると更新されてしまうのでbad idea
-    // setTimeout(() => {
-    //   this.ItemTitle = 'New title'
-    // }, 1500)
   }
 });
 
@@ -1915,6 +1911,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1927,12 +1924,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       bookables: null,
       // loading中であればtrueなので初期値はfalse
-      loading: false
+      loading: false,
+      // bootstrapのgridで表示するcolumns数
+      columns: 3
     };
   },
-  //   beforeCreate() {
-  //     console.log('before create')
-  //   },
+  computed: {
+    // column数とbookablesの数からrow数を計算
+    rows: function rows() {
+      return this.bookables === null ? 0 : Math.ceil(this.bookables.length / this.columns);
+    }
+  },
   // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
   created: function created() {
     var _this = this;
@@ -1942,6 +1944,21 @@ __webpack_require__.r(__webpack_exports__);
       _this.bookables = [{
         title: 'Cheap Villa',
         content: 'A very cheap villa'
+      }, {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }, {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }, {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }, {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }, {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
       }, {
         title: 'Cheap Villa 2',
         content: 'A very cheap villa 2'
@@ -37429,10 +37446,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(_vm.ItemTitle))]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.ItemContent))])
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.ItemTitle))]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.ItemContent))])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -37458,6 +37477,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._v("\n  Rows is : " + _vm._s(_vm.rows) + "\n  "),
     _vm.loading
       ? _c("div", [_vm._v("Data is loading...")])
       : _c(

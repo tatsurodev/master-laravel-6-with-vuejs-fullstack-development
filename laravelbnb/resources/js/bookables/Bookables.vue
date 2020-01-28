@@ -1,5 +1,6 @@
 <template>
   <div>
+    Rows is : {{ rows }}
     <div v-if="loading">Data is loading...</div>
     <div v-else>
       <!-- <BookableListItem></BookableListItem> -->
@@ -30,12 +31,19 @@ export default {
     return {
       bookables: null,
       // loading中であればtrueなので初期値はfalse
-      loading: false
+      loading: false,
+      // bootstrapのgridで表示するcolumns数
+      columns: 3
     }
   },
-  //   beforeCreate() {
-  //     console.log('before create')
-  //   },
+  computed: {
+    // column数とbookablesの数からrow数を計算
+    rows() {
+      return this.bookables === null
+        ? 0
+        : Math.ceil(this.bookables.length / this.columns)
+    }
+  },
   // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
   created() {
     this.loading = true
@@ -44,6 +52,26 @@ export default {
         {
           title: 'Cheap Villa',
           content: 'A very cheap villa'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
+        },
+        {
+          title: 'Cheap Villa 2',
+          content: 'A very cheap villa 2'
         },
         {
           title: 'Cheap Villa 2',
