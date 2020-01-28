@@ -1907,6 +1907,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1914,12 +1918,33 @@ __webpack_require__.r(__webpack_exports__);
     // kebab-caseで登録するとtemplateではkebab-caseのみで使用可
     BookableListItem: _BookableListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  // reactiveに表示したいものはdataに格納、そうでないものはpropsを使うと良い
+  data: function data() {
+    return {
+      bookable1: {
+        title: 'Cheap Villa',
+        content: 'A very cheap villa'
+      },
+      bookable2: {
+        title: 'Cheap Villa 2',
+        content: 'A very cheap villa 2'
+      }
+    };
+  },
   //   beforeCreate() {
   //     console.log('before create')
   //   },
   // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
   created: function created() {
+    var _this = this;
+
     console.log('created');
+    console.log(this.bookable1);
+    console.log(this.bookable2);
+    setTimeout(function () {
+      _this.bookable1.title = 'Expensive Villa';
+      _this.bookable2.title = 'Very Expensive Villa';
+    }, 5000);
   } //   beforeMount() {
   //     console.log('before mount')
   //   },
@@ -37448,16 +37473,16 @@ var render = function() {
     [
       _c("bookable-list-item", {
         attrs: {
-          "item-title": "Cheap Villa",
-          "item-content": "A very cheap villa",
+          "item-title": _vm.bookable1.title,
+          "item-content": _vm.bookable1.content,
           price: 1000
         }
       }),
       _vm._v(" "),
       _c("bookable-list-item", {
         attrs: {
-          "item-title": "Cheap Villa 2",
-          "item-content": "A very cheap villa 2",
+          "item-title": _vm.bookable2.title,
+          "item-content": _vm.bookable2.content,
           price: 1500
         }
       })
