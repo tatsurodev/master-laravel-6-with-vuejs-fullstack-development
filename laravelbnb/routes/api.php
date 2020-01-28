@@ -22,3 +22,7 @@ Route::get('bookables', function (Request $request) {
     // 配列、collectionを返すことでjsonに変換される
     return Bookable::all();
 });
+
+Route::get('bookables/{id}', function (Request $request, $id) {
+    return Bookable::find($id);
+});
