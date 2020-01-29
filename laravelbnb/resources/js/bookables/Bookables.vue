@@ -5,7 +5,7 @@
       <div class="row mb-4" v-for="row in rows" :key="'row' + row">
         <!-- keyにrowだけだと他のforのindex等と被って一意でないのエラーが出るのでkeyを自作 -->
         <div
-          class="col"
+          class="col d-flex align-items-strech"
           v-for="(bookable, column) in bookablesInRow(row)"
           :key="'row' + row + column"
         >
@@ -85,6 +85,7 @@ export default {
 
     const request = axios.get('/api/bookables').then(response => {
       this.bookables = response.data
+      this.bookables.push({ title: 'x', description: 'x' })
       this.loading = false
     })
   }
