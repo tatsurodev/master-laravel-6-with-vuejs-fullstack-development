@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Availability from './Availability.vue'
+import Availability from './Availability'
 export default {
   components: {
     Availability

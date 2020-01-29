@@ -4,16 +4,24 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="from">From</label>
+        <!-- v-model使用時は、value, checked, selected attributeはignroeされる -->
         <input
           type="text"
           name="from"
           class="form-control form-control-sm"
           placeholder="Start date"
+          v-model="from"
         />
       </div>
       <div class="form-group col-md-6">
         <label for="to">To</label>
-        <input type="text" name="to" class="form-control form-control-sm" placeholder="Start date" />
+        <input
+          type="text"
+          name="to"
+          class="form-control form-control-sm"
+          placeholder="Start date"
+          v-model="to"
+        />
       </div>
       <button class="btn btn-secondary btn-block">Check!</button>
     </div>
@@ -21,7 +29,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      from: null,
+      to: null
+    }
+  }
+}
 </script>
 
 <style scoped>
