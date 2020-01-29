@@ -1904,9 +1904,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    ItemTitle: String,
-    ItemDescription: String,
-    price: Number
+    title: String,
+    description: String,
+    id: Number
   }
 });
 
@@ -1922,9 +1922,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BookableListItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookableListItem */ "./resources/js/bookables/BookableListItem.vue");
-//
-//
-//
 //
 //
 //
@@ -37493,11 +37490,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card w-100" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.ItemTitle))]),
+      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
       _vm._v(" "),
-      _c("p", { staticClass: "card-text" }, [
-        _vm._v(_vm._s(_vm.ItemDescription))
-      ])
+      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.description))])
     ])
   ])
 }
@@ -37541,13 +37536,10 @@ var render = function() {
                       staticClass: "col d-flex align-items-strech"
                     },
                     [
-                      _c("bookable-list-item", {
-                        attrs: {
-                          "item-title": bookable.title,
-                          "item-description": bookable.description,
-                          price: 1000
-                        }
-                      })
+                      _c(
+                        "bookable-list-item",
+                        _vm._b({}, "bookable-list-item", bookable, false)
+                      )
                     ],
                     1
                   )

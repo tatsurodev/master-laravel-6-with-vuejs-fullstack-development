@@ -13,11 +13,8 @@
           <!-- kebab-caseで渡したpropsは、PascaleCaseで使用する -->
           <!-- propsの型を指定するにはv-bindでquoteの中をjavascript式にして、渡したい型の文字列、数字、配列、オブジェクト等を指定する -->
           <!-- bookablesがnullの時、v-forはスキップされる -->
-          <bookable-list-item
-            :item-title="bookable.title"
-            :item-description="bookable.description"
-            :price="1000"
-          ></bookable-list-item>
+          <!-- objectのproperty(:title="bookable.title", :description="bookable.description"とか)をpropertyとして全部渡す時、一々明示的に書かなくても、v-bind="object"で一気に書ける。つまり、v-bind=で指定したobjectのproperty全てがchild componentにpropsとして渡すことができる -->
+          <bookable-list-item v-bind="bookable"></bookable-list-item>
         </div>
         <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + p"></div>
       </div>
