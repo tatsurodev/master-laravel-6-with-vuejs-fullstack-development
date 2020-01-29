@@ -1875,7 +1875,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     ItemTitle: String,
-    ItemContent: String,
+    ItemDescription: String,
     price: Number
   }
 });
@@ -1977,31 +1977,10 @@ __webpack_require__.r(__webpack_exports__);
       return console.log("Error ".concat(reuslt));
     });
     console.log(p);
-    setTimeout(function () {
-      _this.bookables = [{
-        title: 'Cheap Villa',
-        content: 'A very cheap villa'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }, {
-        title: 'Cheap Villa 2',
-        content: 'A very cheap villa 2'
-      }];
+    var request = axios.get('/api/bookables').then(function (response) {
+      _this.bookables = response.data;
       _this.loading = false;
-    }, 2000);
+    });
   }
 });
 
@@ -37487,7 +37466,9 @@ var render = function() {
     _c("div", { staticClass: "card-body" }, [
       _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.ItemTitle))]),
       _vm._v(" "),
-      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.ItemContent))])
+      _c("p", { staticClass: "card-text" }, [
+        _vm._v(_vm._s(_vm.ItemDescription))
+      ])
     ])
   ])
 }
@@ -37531,7 +37512,7 @@ var render = function() {
                       _c("bookable-list-item", {
                         attrs: {
                           "item-title": bookable.title,
-                          "item-content": bookable.content,
+                          "item-description": bookable.description,
                           price: 1000
                         }
                       })
