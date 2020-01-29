@@ -52,8 +52,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -63,11 +63,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    // api.phpの各設定
     protected function mapApiRoutes()
     {
+        // uriにつけるprefix
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            // controllerのnamespace
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 }
