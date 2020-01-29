@@ -62,26 +62,9 @@ export default {
   created() {
     this.loading = true
 
-    // promiseで成功時resolve、失敗時rejectをcall
-    const p = new Promise((resolve, reject) => {
-      console.log(resolve)
-      console.log(reject)
-      // asynchronous処理でresolve
-      setTimeout(() => resolve('Hello'), 3000)
-    })
-      // promise内のcallback functionでresolveされた値がresultに入る
-      .then(result => {
-        console.log('Hello again ' + result)
-        return 'Good morning'
-      })
-      // 前のthenの結果がresultに入る
-      .then(result => console.log(result))
-      // promise内のcallback functionでrejectされた値がresultに入る
-      .catch(result => console.log(`Error ${reuslt}`))
-    console.log(p)
-
     const request = axios.get('/api/bookables').then(response => {
-      this.bookables = response.data
+      // response.dataのdataはaxiosのproperty, response.data.dataの最後のdataはlaravelのapi resourceによって自動的に付与されるjson objectのproperty
+      this.bookables = response.data.data
       this.bookables.push({ title: 'x', description: 'x' })
       this.loading = false
     })
