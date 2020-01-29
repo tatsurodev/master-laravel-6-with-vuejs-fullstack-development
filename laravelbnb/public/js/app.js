@@ -1956,7 +1956,27 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.loading = true;
+    this.loading = true; // promiseで成功時resolve、失敗時rejectをcall
+
+    var p = new Promise(function (resolve, reject) {
+      console.log(resolve);
+      console.log(reject); // asynchronous処理でresolve
+
+      setTimeout(function () {
+        return resolve('Hello');
+      }, 3000);
+    }) // promise内のcallback functionでresolveされた値がresultに入る
+    .then(function (result) {
+      console.log('Hello again ' + result);
+      return 'Good morning';
+    }) // 前のthenの結果がresultに入る
+    .then(function (result) {
+      return console.log(result);
+    }) // promise内のcallback functionでrejectされた値がresultに入る
+    ["catch"](function (result) {
+      return console.log("Error ".concat(reuslt));
+    });
+    console.log(p);
     setTimeout(function () {
       _this.bookables = [{
         title: 'Cheap Villa',

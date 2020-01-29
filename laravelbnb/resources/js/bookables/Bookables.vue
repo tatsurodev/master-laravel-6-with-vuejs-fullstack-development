@@ -64,6 +64,25 @@ export default {
   // apiでdataを取得するような場合、時間が多少かかるのでcreated等でできるだけ早くdataを取得するようにするとbetter
   created() {
     this.loading = true
+
+    // promiseで成功時resolve、失敗時rejectをcall
+    const p = new Promise((resolve, reject) => {
+      console.log(resolve)
+      console.log(reject)
+      // asynchronous処理でresolve
+      setTimeout(() => resolve('Hello'), 3000)
+    })
+      // promise内のcallback functionでresolveされた値がresultに入る
+      .then(result => {
+        console.log('Hello again ' + result)
+        return 'Good morning'
+      })
+      // 前のthenの結果がresultに入る
+      .then(result => console.log(result))
+      // promise内のcallback functionでrejectされた値がresultに入る
+      .catch(result => console.log(`Error ${reuslt}`))
+    console.log(p)
+
     setTimeout(() => {
       this.bookables = [
         {
