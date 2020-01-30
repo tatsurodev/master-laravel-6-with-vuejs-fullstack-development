@@ -23,6 +23,11 @@ class BookableAvailabilityController extends Controller
         ]);
 
         $bookable = Bookable::findOrFail($id);
-        dd($bookable->bookings()->betweenDates($data['from'], $data['to'])->count());
+        // 予約可能ならstatus code 200, そうでないなら404
+        return $bookable->availableFor($data['from'], $data['to'])
+            // defaultではstatus code 200
+            ? response()->json([])
+            // 404
+            : response()->json([], 404);
     }
 }
