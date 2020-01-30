@@ -19,7 +19,7 @@ class BookableAvailabilityController extends Controller
         // 通常はvalidation error時にerror msgとredirectが返ってくるので、headerでAccept application/jsonを指定してerror msgをjsonで受け取るようにpostman等で指定する
         $data = $request->validate([
             'from' => 'required|date_format:Y-m-d|after_or_equal:now',
-            'to' => 'required:date_format:Y-m-d|after_or_equal:from',
+            'to' => 'required|date_format:Y-m-d|after_or_equal:from',
         ]);
 
         $bookable = Bookable::findOrFail($id);
