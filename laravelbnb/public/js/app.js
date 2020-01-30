@@ -1899,12 +1899,31 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       from: null,
-      to: null
+      to: null,
+      loading: false,
+      status: null,
+      errors: null
     };
   },
   methods: {
     check: function check() {
-      alert('I will check something now!');
+      var _this = this;
+
+      this.loading = true;
+      axios.get("/api/bookables/".concat(this.$route.params.id, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
+        _this.status = response.status;
+      }) // status codeが200いくつか以外ならcatchされる
+      ["catch"](function (error) {
+        // validation errorを格納
+        if (422 === error.response.status) {
+          _this.errors = error.response.data.errors;
+        }
+
+        _this.status = error.response.status;
+      }) // always executed, finallyと一緒
+      .then(function () {
+        return _this.loading = false;
+      });
     }
   }
 });
@@ -38256,6 +38275,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-secondary btn-block",
+          attrs: { disabled: _vm.loading },
           on: { click: _vm.check }
         },
         [_vm._v("Check!")]
