@@ -11,6 +11,11 @@ class Bookable extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     // 特定の期間で予約可能かどうか
     public function availableFor($from, $to): bool
     {
