@@ -2,7 +2,7 @@
   <div>
     <div class="form-group">
       <label class="text-muted">Select the star rating (1 is worst - 5 is best)</label>
-      <star-rating :rating="2" class="fa-3x" @rating:changed="review.rating = $event"></star-rating>
+      <star-rating :rating="review.rating" class="fa-3x" @rating:changed="review.rating = $event"></star-rating>
     </div>
     <div class="form-group">
       <label for="content" class="text-muted">Describe your expirience with</label>
