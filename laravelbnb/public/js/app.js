@@ -2231,7 +2231,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      review: {
+        rating: 5,
+        content: null
+      }
+    };
+  } //   methods: {
+  //     onRatingCahnged(rating) {
+  //       console.log(rating)
+  //     }
+  //   }
+
+});
 
 /***/ }),
 
@@ -2244,6 +2258,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56150,7 +56174,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("review-list", { attrs: { "bookable-id": _vm.$route.params.id } })
+        _c("review-list", { attrs: { "bookable-id": this.$route.params.id } })
       ],
       1
     ),
@@ -56158,7 +56182,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-md-4 pb-4" },
-      [_c("Availability", { attrs: { "bookable-id": _vm.$route.params.id } })],
+      [_c("Availability", { attrs: { "bookable-id": this.$route.params.id } })],
       1
     )
   ])
@@ -56370,7 +56394,15 @@ var render = function() {
           _vm._v("Select the star rating (1 is worst - 5 is best)")
         ]),
         _vm._v(" "),
-        _c("star-rating", { staticClass: "fa-3x", attrs: { rating: 5 } })
+        _c("star-rating", {
+          staticClass: "fa-3x",
+          attrs: { rating: 2 },
+          on: {
+            "rating:changed": function($event) {
+              _vm.review.rating = $event
+            }
+          }
+        })
       ],
       1
     ),
@@ -56425,7 +56457,15 @@ var render = function() {
     { staticClass: "d-flex" },
     [
       _vm._l(_vm.fullStars, function(star) {
-        return _c("i", { key: "full" + star, staticClass: "fas fa-star" })
+        return _c("i", {
+          key: "full" + star,
+          staticClass: "fas fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("rating:changed", star)
+            }
+          }
+        })
       }),
       _vm._v(" "),
       _vm.halfStar
@@ -56433,7 +56473,15 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.emptyStars, function(star) {
-        return _c("i", { key: "empty" + star, staticClass: "far fa-star" })
+        return _c("i", {
+          key: "empty" + star,
+          staticClass: "far fa-star",
+          on: {
+            click: function($event) {
+              return _vm.$emit("rating:changed", _vm.fullStars + star)
+            }
+          }
+        })
       })
     ],
     2
