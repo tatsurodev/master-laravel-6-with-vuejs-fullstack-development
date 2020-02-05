@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Booking;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookingByReviewShowResource;
 use Illuminate\Http\Request;
 
 class BookingByReviewController extends Controller
@@ -16,6 +17,6 @@ class BookingByReviewController extends Controller
      */
     public function __invoke($reviewKey, Request $request)
     {
-        return Booking::findByReviewKey($reviewKey) ?? abort(404);
+        return new BookingByReviewShowResource(Booking::findByReviewKey($reviewKey)) ?? abort(404);
     }
 }
