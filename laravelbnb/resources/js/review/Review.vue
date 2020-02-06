@@ -1,26 +1,48 @@
-<template>
-  <div>
-    <div v-if="loading">Loading...</div>
-    <div v-else>
-      <div v-if="alreadyReviewed">
-        <h3>You've already left a review for this booking!</h3>
+ <template>
+  <div class="row">
+    <div
+      :class="[{'col-md-4': loading || !alreadyReviewed}, {'d-none': !loading && alreadyReviewed}]"
+    >
+      <div class="card">
+        <div class="card-body">
+          <div v-if="loading">Loading...</div>
+          <div v-else>
+            Stayed at
+            <p>
+              <router-link
+                :to="{name: 'bookable', params: {id: booking.bookable.bookable_id}}"
+              >{{ booking.bookable.title }}</router-link>
+            </p>
+            <p>From {{ booking.from }} to {{ booking.to }}</p>
+          </div>
+        </div>
       </div>
+    </div>
+    <div
+      :class="[{'col-md-8': loading || !alreadyReviewed}, {'col-md-12': !loading && alreadyReviewed}]"
+    >
+      <div v-if="loading">Loading...</div>
       <div v-else>
-        <div class="form-group">
-          <label class="text-muted">Select the star rating (1 is worst - 5 is best)</label>
-          <star-rating class="fa-3x" v-model="review.rating"></star-rating>
+        <div v-if="alreadyReviewed">
+          <h3>You've already left a review for this booking!</h3>
         </div>
-        <div class="form-group">
-          <label for="content" class="text-muted">Describe your expirience with</label>
-          <textarea
-            name="content"
-            cols="30"
-            rows="10"
-            class="form-control"
-            v-model="review.content"
-          ></textarea>
+        <div v-else>
+          <div class="form-group">
+            <label class="text-muted">Select the star rating (1 is worst - 5 is best)</label>
+            <star-rating class="fa-3x" v-model="review.rating"></star-rating>
+          </div>
+          <div class="form-group">
+            <label for="content" class="text-muted">Describe your expirience with</label>
+            <textarea
+              name="content"
+              cols="30"
+              rows="10"
+              class="form-control"
+              v-model="review.content"
+            ></textarea>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block">Submit</button>
         </div>
-        <button class="btn btn-lg btn-primary btn-block">Submit</button>
       </div>
     </div>
   </div>
@@ -53,6 +75,7 @@ export default {
           err.response.status &&
           404 === err.response.status
         ) {
+          // 2. fetch a booking by a review key
           return axios
             .get(`/api/booking-by-review/${this.$route.params.id}`)
             .then(response => {
@@ -63,12 +86,17 @@ export default {
       .then(response => {
         this.loading = false
       })
-    // 2. fetch a booking by a review key
     // 3. store the review
   },
   computed: {
     alreadyReviewed() {
+      return this.hasReview || !this.booking
+    },
+    hasReview() {
       return this.existingReview !== null
+    },
+    hasBooking() {
+      return this.booking !== null
     }
   }
 }
