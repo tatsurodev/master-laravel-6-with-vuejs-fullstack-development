@@ -39,7 +39,11 @@
                 v-model="review.content"
               ></textarea>
             </div>
-            <button class="btn btn-lg btn-primary btn-block">Submit</button>
+            <button
+              class="btn btn-lg btn-primary btn-block"
+              @click.prevent="submit"
+              :disabled="loading"
+            >Submit</button>
           </div>
         </div>
       </div>
@@ -54,6 +58,7 @@ export default {
   data() {
     return {
       review: {
+        id: null,
         rating: 5,
         content: null
       },
@@ -64,10 +69,11 @@ export default {
     }
   },
   created() {
+    this.review.id = this.$route.params.id
     this.loading = true
     // 1. if review already exists (in reviews table by id)
     axios
-      .get(`/api/reviews/${this.$route.params.id}`)
+      .get(`/api/reviews/${this.review.id}`)
       .then(response => {
         this.existingReview = response.data.data
       })
@@ -76,7 +82,7 @@ export default {
         if (is404(err)) {
           // 2. fetch a booking by a review key
           return axios
-            .get(`/api/booking-by-review/${this.$route.params.id}`)
+            .get(`/api/booking-by-review/${this.review.id}`)
             .then(response => {
               return (this.booking = response.data.data)
             })
@@ -112,6 +118,16 @@ export default {
     },
     twoColumns() {
       return this.loading || !this.alreadyReviewed
+    }
+  },
+  methods: {
+    submit() {
+      this.loading = true
+      axios
+        .post(`/api/reviews`, this.review)
+        .then(response => console.log(response))
+        .catch(err => (this.error = true))
+        .then(() => (this.loading = false))
     }
   }
 }
