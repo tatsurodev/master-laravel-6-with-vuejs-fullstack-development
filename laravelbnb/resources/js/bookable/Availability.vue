@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { is422 } from './../shared/utils/response'
+
 export default {
   props: {
     bookabaleId: String
@@ -73,7 +75,7 @@ export default {
         // status codeが200いくつか以外ならcatchされる
         .catch(error => {
           // validation errorを格納
-          if (422 === error.response.status) {
+          if (is422(error)) {
             this.errors = error.response.data.errors
           }
           this.status = error.response.status
