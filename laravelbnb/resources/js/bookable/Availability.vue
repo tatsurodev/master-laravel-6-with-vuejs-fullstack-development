@@ -40,8 +40,10 @@
 
 <script>
 import { is422 } from './../shared/utils/response'
+import validationErrors from './../shared/mixins/validationErrors'
 
 export default {
+  mixins: [validationErrors],
   props: {
     bookabaleId: String
   },
@@ -50,8 +52,7 @@ export default {
       from: null,
       to: null,
       loading: false,
-      status: null,
-      errors: null
+      status: null
     }
   },
   methods: {
@@ -74,10 +75,6 @@ export default {
         })
         // always executed, finallyと一緒
         .then(() => (this.loading = false))
-    },
-    errorFor(field) {
-      // validation errorあり & そのerrorが該当fieldのerror で該当fieldのerrorをreturn, なければnull
-      return this.hasErrors && this.errors[field] ? this.errors[field] : null
     }
   },
   computed: {

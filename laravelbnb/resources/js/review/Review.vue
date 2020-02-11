@@ -55,8 +55,11 @@
 
 <script>
 import { is404, is422 } from './../shared/utils/response'
+import validationErrors from './../shared/mixins/validationErrors'
 
 export default {
+  // 重複する内容がある時、mixinsよりcomponentで定義した方が優先される
+  mixins: [validationErrors],
   data() {
     return {
       review: {
@@ -68,7 +71,6 @@ export default {
       loading: false,
       booking: null,
       error: false,
-      errors: null,
       sending: false
     }
   },
@@ -144,11 +146,6 @@ export default {
           this.error = true
         })
         .then(() => (this.sending = false))
-    },
-    errorFor(field) {
-      return null !== this.errors && this.errors[field]
-        ? this.errors[field]
-        : null
     }
   }
 }
