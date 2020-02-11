@@ -74,40 +74,35 @@ export default {
       sending: false
     }
   },
-  created() {
+  async created() {
     this.review.id = this.$route.params.id
     this.loading = true
     // 1. if review already exists (in reviews table by id)
-    axios
-      .get(`/api/reviews/${this.review.id}`)
-      .then(response => {
-        this.existingReview = response.data.data
-      })
-      .catch(err => {
-        console.log(err)
-        if (is404(err)) {
-          // 2. fetch a booking by a review key
-          return axios
-            .get(`/api/booking-by-review/${this.review.id}`)
-            .then(response => {
-              return (this.booking = response.data.data)
-            })
-            .catch(err => {
-              this.error = !is404(err)
-              // 三項演算子version
-              //   is404(err) ? {} : (this.error = true)
-              // if version
-              //   if (!is404(err)) {
-              //     this.error = true
-              //   }
-            })
+    try {
+      this.existingReview = (
+        await axios.get(`/api/reviews/${this.review.id}`)
+      ).data.data
+    } catch (err) {
+      if (is404(err)) {
+        // 2. fetch a booking by a review key
+        try {
+          this.booking = (
+            await axios.get(`/api/booking-by-review/${this.review.id}`)
+          ).data.data
+        } catch (err) {
+          this.error = !is404(err)
+          // 三項演算子version
+          //   is404(err) ? {} : (this.error = true)
+          // if version
+          //   if (!is404(err)) {
+          //     this.error = true
+          //   }
         }
-      })
-      .then(response => {
-        console.log(response)
-        this.loading = false
-      })
-    // 3. store the review
+      } else {
+        this.error = true
+      }
+    }
+    this.loading = false
   },
   computed: {
     alreadyReviewed() {
@@ -127,6 +122,7 @@ export default {
     }
   },
   methods: {
+    // 3. store the review
     submit() {
       this.errors = null
       this.sending = true
