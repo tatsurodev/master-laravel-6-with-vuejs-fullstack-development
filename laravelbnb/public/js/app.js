@@ -1921,7 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
-    bookabaleId: [String, Number]
+    bookableId: [String, Number]
   },
   data: function data() {
     return {
@@ -1936,7 +1936,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      axios.get("/api/bookables/".concat(this.bookabaleId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
+      this.errors = null;
+      this.$store.commit('setLastSearch', {
+        from: this.from,
+        to: this.to
+      });
+      axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
         _this.status = response.status;
       }) // status codeが200いくつか以外ならcatchされる
       ["catch"](function (error) {
@@ -57271,7 +57276,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("review-list", { attrs: { "bookable-id": this.$route.params.id } })
+        _c("review-list", { attrs: { "bookable-id": _vm.$route.params.id } })
       ],
       1
     ),
@@ -57279,7 +57284,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-md-4 pb-4" },
-      [_c("Availability", { attrs: { "bookable-id": this.$route.params.id } })],
+      [_c("Availability", { attrs: { "bookable-id": _vm.$route.params.id } })],
       1
     )
   ])
