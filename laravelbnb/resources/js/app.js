@@ -10,6 +10,8 @@ import StarRating from './shared/components/StarRating'
 import FatalError from './shared/components/FatalError'
 import ValidationErrors from './shared/components/ValidationErrors'
 import Success from './shared/components/Success'
+// export defaultなので好きな名前でimportできる
+import storeDefinition from './store'
 
 window.Vue = require('vue')
 
@@ -23,9 +25,12 @@ Vue.component('fatal-error', FatalError)
 Vue.component('success', Success)
 Vue.component('v-errors', ValidationErrors)
 
+const store = new Vuex.Store(storeDefinition)
+
 const app = new Vue({
   el: '#app',
   router,
+  store,
   components:
   {
     Index,
