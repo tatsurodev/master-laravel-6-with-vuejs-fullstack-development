@@ -22,6 +22,8 @@
 <script>
 import Availability from './Availability'
 import ReviewList from './ReviewList'
+import { mapState } from 'vuex'
+
 export default {
   components: {
     Availability,
@@ -30,7 +32,8 @@ export default {
   data() {
     return {
       bookable: null,
-      loading: false
+      loading: false,
+      price: null
     }
   },
   created() {
@@ -40,9 +43,25 @@ export default {
       this.loading = false
     })
   },
+  computed: {
+    ...mapState(['lastSearch'])
+  },
   methods: {
-    checkPrice(hasAvailability) {
-      console.log(hasAvailability)
+    async checkPrice(hasAvailability) {
+      if (!hasAvailability) {
+        this.price = null
+        return
+      }
+
+      try {
+        this.price = (
+          await axios.get(
+            `/api/bookables/${this.bookable.id}/price?from=${this.lastSearch.from}&to=${this.lastSearch.to}`
+          )
+        ).data.data
+      } catch (err) {
+        this.price = null
+      }
     }
   }
 }
